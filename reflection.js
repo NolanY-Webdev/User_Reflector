@@ -1,5 +1,6 @@
-function User(username) {
+function User(username, superClass) {
   this.username = username;
+  this.superClass = superClass;
 }
 
 User.prototype.battleCry = function() {
@@ -8,7 +9,7 @@ User.prototype.battleCry = function() {
 
 function GroupUser(orginization) {
   this.orginization = orginization;
-  User.call(this, 'Group')
+  User.call(this, 'Group', User);
 }
 
 GroupUser.prototype.harlemShake = function() {
@@ -19,7 +20,7 @@ GroupUser.prototype.harlemShake = function() {
 function SuperUser(adminLevel, group, name) {
   this.adminLevel = adminLevel;
   GroupUser.call(this, 'Earth Defense Force');
-  User.call(this, 'Krillin');
+  User.call(this, 'Krillin', GroupUser);
 }
 
 SuperUser.prototype.justSaiyn = function() {
@@ -37,15 +38,28 @@ function extend(destination, source) {
 }
 
 extend(GroupUser.prototype, User.prototype);
-extend(SuperUser.prototype, User.prototype);
 extend(SuperUser.prototype, GroupUser.prototype);
 
-var Kasi = new User('Kasi');
+function reflector(obj) {
+  console.log(obj);
+  console.log(Object.getPrototypeOf(obj));
+  if (this.superClass !== null) {
+    reflector(this.constructor.name);
+  }
+
+}
+
+var Kasi = new User('Kasi', null);
 var DevLeague = new GroupUser('DevLeague');
 var Krillin = new SuperUser(4);
 
-console.log(Object.getPrototypeOf(Kasi));
-console.log(Object.getPrototypeOf(DevLeague));
-console.log(Object.getPrototypeOf(Krillin));
+// console.log(Kasi);
+// console.log(Object.getPrototypeOf(Kasi));
+// console.log(DevLeague);
+// console.log(Object.getPrototypeOf(DevLeague));
+// console.log(Krillin);
+// console.log(Object.getPrototypeOf(Krillin));
+// console.log(Object.getPrototypeOf(Object.getPrototypeOf(Krillin)));
+// console.log(Object.getPrototypeOf(Object.getPrototypeOf(Object.getPrototypeOf(Krillin))));
 
-
+reflector(Krillin);
