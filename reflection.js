@@ -18,7 +18,7 @@ function GroupUser(orginization) {
 
 GroupUser.prototype = Object.create(User.prototype, {
   constructor :{
-    value : User
+    value : GroupUser
   }
 }
 );
@@ -38,7 +38,7 @@ function SuperUser(adminLevel, group, name) {
 
 SuperUser.prototype = Object.create(GroupUser.prototype, {
   constructor :{
-    value : GroupUser
+    value : SuperUser
   }
 }
 );
@@ -51,10 +51,10 @@ SuperUser.prototype.justSaiyn = function() {
 //REFLECTOR
 
 function reflector(obj) {
-  console.log(obj.constructor.name);
-  console.log(obj);
-  console.log(Object.getPrototypeOf(obj));
-  console.log(Object.getOwnPropertyNames(obj));
+  console.log('Constructor:', obj.constructor.name);
+  console.log('Object:', obj);
+  console.log('Methods:', Object.getPrototypeOf(obj));
+  // console.log(Object.getOwnPropertyNames(obj));
   if (Object.getPrototypeOf(obj) !== null) {
     reflector(Object.getPrototypeOf(obj));
   }
